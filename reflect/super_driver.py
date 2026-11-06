@@ -36,7 +36,7 @@ def main(argv):
             t = time.time()
             res = analyse(p.label, p.d, n, roots,
                           log=lambda s: print(s, flush=True),
-                          vinberg_kw=dict(delta_max=3000, max_roots=150, time_limit=600))
+                          vinberg_kw=dict(delta_max=3000, max_roots=150, time_limit=400))
             res["seconds"] = time.time() - t
             out.write_text(json.dumps(res, indent=1))
             print(f"{p.label:7s} n={n}: {res['outcome']} (symmetries {res['n_symmetries']}, "

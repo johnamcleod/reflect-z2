@@ -34,6 +34,9 @@ def cell(label: str, d: QI, n: int):
         return "reflective", r["n_roots"], r
     if cert.exists():
         return "non-reflective", cert.stem, r
+    lower = [m for m in range(2, n) if (CERTS / f"{label}_n{m}.json").exists()]
+    if lower:  # n -> n+1 lemma (methods.md, "Extension to all n")
+        return "non-reflective-lemma", f"{label}_n{min(lower)}", r
     return "undetermined", None, r
 
 
@@ -106,6 +109,8 @@ def main():
                     maxn = n
             elif status == "non-reflective":
                 row[f"n{n}"] = f"non-reflective (cert {info})"
+            elif status == "non-reflective-lemma":
+                row[f"n{n}"] = f"non-reflective (lemma from {info})"
             else:
                 row[f"n{n}"] = "undetermined"
             cells[n] = (status, info, run)
@@ -139,7 +144,8 @@ def write_report(summary):
     L.append("## Summary table\n")
     L.append("R k = reflective with k faces (Coxeter diagram in `diagrams/`); "
              "N = non-reflective, with a certificate in `data/certs/` that "
-             "`verify_certificate.py` re-checks; U = undetermined.\n")
+             "`verify_certificate.py` re-checks; N* = non-reflective by the n → n+1 lemma from a "
+             "certified lower n (no direct certificate found); U = undetermined.\n")
     hdr = "| param | type | N(𝔭) | d | " + " | ".join(f"n={n}" for n in NS) + " | max n |"
     L.append(hdr)
     L.append("|" + "---|" * (5 + len(NS)))
@@ -147,15 +153,29 @@ def write_report(summary):
         cs = []
         for n in NS:
             st, info, _ = cells[n]
-            cs.append(f"R {info}" if st == "reflective" else "N" if st == "non-reflective" else "U")
+            cs.append(f"R {info}" if st == "reflective" else "N" if st == "non-reflective"
+                      else "N*" if st == "non-reflective-lemma" else "U")
         L.append(f"| {p.label} | {p.kind} | {p.ideal_norm} | {p.d} | " + " | ".join(cs) +
                  f" | {maxn if maxn >= 2 else '–'} |")
     L.append("")
     L.append("## Maximal reflective dimension against |N(d)|\n")
-    L.append("| |N(d)| | params (type) | max reflective n |")
-    L.append("|---|---|---|")
+    L.append("| |N(d)| | params (type) | d ≈ | σ(d) ≈ | max reflective n |")
+    L.append("|---|---|---|---|---|")
     for p, maxn, _ in sorted(summary, key=lambda t: (abs(t[0].d.norm()), t[0].label)):
-        L.append(f"| {abs(p.d.norm())} | {p.label} ({p.kind}) | {maxn if maxn >= 2 else 'none'} |")
+        L.append(f"| {abs(p.d.norm())} | {p.label} ({p.kind}) | {p.d.f():.3f} | {p.d.fs():.3f} "
+                 f"| {maxn if maxn >= 2 else 'none'} |")
+    L.append("")
+    L.append("### The two primes above a split p\n")
+    L.append("For split p = 𝔭𝔭′ the two canonical generators differ by which embedding is "
+             "small: the 'a' generator has the smaller value d at the time-like embedding id.\n")
+    L.append("| p | a: d, max n | b: d, max n |")
+    L.append("|---|---|---|")
+    by = {p.label: (p, m) for p, m, _ in summary}
+    for q in sorted({p.p for p, _, _ in summary if p.kind == "split"}):
+        a, b = by.get(f"p{q}a"), by.get(f"p{q}b")
+        if a and b:
+            f = lambda t: f"{t[0].d.f():.2f}, {t[1] if t[1] >= 2 else 'none'}"
+            L.append(f"| {q} | {f(a)} | {f(b)} |")
     L.append("")
     L.append("Over ℚ the analogous pattern is d = 1, 2, 3, 5, 7, 11, 17 → n = "
              + ", ".join(str(v) for v in Q_PATTERN.values()) + ".\n")

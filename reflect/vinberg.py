@@ -55,6 +55,7 @@ class SumOfSquares:
         self.ring = ring
         self._sq = {}
         self._memo = {}
+        self.deadline = None  # optional wall-clock deadline (time.time()); raises TimeoutError
 
     def squares_upto(self, R: QI) -> List[QI]:
         key = R.key()
@@ -74,6 +75,8 @@ class SumOfSquares:
         elif R.is_zero():
             out.append(tuple([ZERO] * s))
         elif ring.is_totally_nonneg(R):
+            if self.deadline is not None and time.time() > self.deadline:
+                raise TimeoutError("time_limit")
             for y in self.squares_upto(R):
                 if upper is not None and y.gt(upper):
                     continue

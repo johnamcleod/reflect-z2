@@ -1,0 +1,16 @@
+graph G {
+  node [shape=circle, fontsize=10, width=0.3, fixedsize=true];
+  overlap=false; splines=true;
+  0 [label="1"];
+  1 [label="2"];
+  2 [label="3"];
+  3 [label="4"];
+  4 [label="5"];
+  0 -- 1 [label="4", fontsize=9];
+  0 -- 2;
+  0 -- 3 [style=dashed, color=gray50];
+  0 -- 4 [style=dashed, color=gray50];
+  1 -- 2 [style=dashed, color=gray50];
+  1 -- 4 [style=dashed, color=gray50];
+  2 -- 3 [style=dashed, color=gray50];
+}

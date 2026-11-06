@@ -1,0 +1,10 @@
+{
+ "label": "p7a",
+ "d": "-1+2*r2",
+ "n": 6,
+ "n_symmetries": 42,
+ "n_pure_translations": 0,
+ "decompositions": [],
+ "outcome": "no decomposition (no pure translation among short words)",
+ "seconds": 0.7950608730316162
+}

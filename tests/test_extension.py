@@ -26,12 +26,19 @@ def test_no_odd_angles_at_norm_one_root():
             assert all(e == 1 for _, e in fs)
 
 
-def test_certified_ranges_are_upward_closed():
-    certs = {p.name for p in (ROOT / "data/certs").glob("*.json")}
-    by_label = {}
-    for name in certs:
-        label, n = name[:-5].rsplit("_n", 1)
-        by_label.setdefault(label, set()).add(int(n))
-    for label, ns in by_label.items():
-        n0 = min(ns)
-        assert ns == set(range(n0, 11)), (label, sorted(ns))
+def test_certificates_consistent_with_lemma():
+    """Non-reflective at n0 => non-reflective for all n >= n0 (methods.md, extension).
+    So no run at n >= n0 may have terminated as reflective; the cells n > n0 without a
+    direct certificate are covered by the lemma (report.md marks them 'N*')."""
+    import json
+    from reflect.params import enumerate_params
+    from reflect.run import run_path
+    certs = {p.stem for p in (ROOT / "data/certs").glob("*.json")}
+    for prm in enumerate_params():
+        ns = [n for n in range(2, 11) if f"{prm.label}_n{n}" in certs]
+        if not ns:
+            continue
+        for n in range(min(ns), 11):
+            r = run_path("Zr2", prm.d, n)
+            if r.exists():
+                assert json.loads(r.read_text())["status"] != "reflective", (prm.label, n)

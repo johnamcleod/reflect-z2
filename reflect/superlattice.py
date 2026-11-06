@@ -305,6 +305,7 @@ def vinberg_general(d: QI, n: int, B, D: QI, *, delta_max: float = 2000.0,
         return True, m
 
     sos = SumOfSquares(ZS2)
+    sos.deadline = t0 + time_limit
     nperm = 0
 
     def scale_i(m):
@@ -338,6 +339,8 @@ def vinberg_general(d: QI, n: int, B, D: QI, *, delta_max: float = 2000.0,
             return
         r0 = (int(y0.a) % Dn, int(y0.b) % Dn)
         for zs in sos.solve(Rz, n):
+            if time.time() - t0 > time_limit:
+                raise TimeoutError("time_limit")
             ys = [s * z for z in zs]
             for v in _signed_perms(ys):
                 nperm += 1
@@ -356,8 +359,14 @@ def vinberg_general(d: QI, n: int, B, D: QI, *, delta_max: float = 2000.0,
     # stabiliser of v0: roots with x_0 = 0, chamber containing a generic rho
     simple_now: List = []
     stab = []
-    for m in norms:
-        stab.extend(candidates(m, ZERO))
+    try:
+        for m in norms:
+            stab.extend(candidates(m, ZERO))
+    except TimeoutError:
+        return {"status": "undetermined", "stop": "time_limit (stabiliser)", "n_roots": 0,
+                "roots": [], "termination": None, "coxiter_graph": None,
+                "norms": [str(m) for m in norms], "scale": str(c),
+                "seconds": time.time() - t0}
     rho = [ZERO] + [QI(Fraction((n + 1 - i) * 1000 + i * i, 997)) for i in range(1, n + 1)]
     for r in stab:
         assert not form(d, r, rho).is_zero(), "rho not generic"
@@ -431,7 +440,8 @@ def vinberg_general(d: QI, n: int, B, D: QI, *, delta_max: float = 2000.0,
 
 
 # ---------------------------------------------------------------- driver -----------
-def analyse(label: str, d: QI, n: int, roots, log=print, vinberg_kw=None) -> Dict:
+def analyse(label: str, d: QI, n: int, roots, log=print, vinberg_kw=None,
+            max_runs: int = 3) -> Dict:
     syms = vertex_symmetries(d, n, roots)
     trans = pure_translations(syms, n)
     res = {"label": label, "d": str(d), "n": n, "n_symmetries": len(syms),
@@ -445,10 +455,26 @@ def analyse(label: str, d: QI, n: int, roots, log=print, vinberg_kw=None) -> Dic
     for s in syms[:20]:
         xs.append(matvec(s["g"], v0))
     best = None
+    seen_lattices = []
+    runs = 0
     for h in trans[:5]:
+        if runs >= max_runs:
+            break
         for dec in decompose(d, n, h, xs)[:6]:
+            if runs >= max_runs:
+                break
             assert not _is_root_L(d, dec["a"]) and not _is_root_L(d, dec["b"])
             B, D, info = superlattice_basis(d, n, dec["Ra"])
+            Binv0 = inverse(B)
+            # skip a lattice already analysed (mutual containment of bases)
+            if any(all(in_lattice(Bi, [B[i][j] for i in range(n + 1)]) is not None
+                       for j in range(n + 1)) and
+                   all(in_lattice(Binv0, [B2[i][j] for i in range(n + 1)]) is not None
+                       for j in range(n + 1))
+                   for B2, Bi in seen_lattices):
+                continue
+            seen_lattices.append((B, Binv0))
+            runs += 1
             entry = {"h": [[str(x) for x in r] for r in h],
                      "a": [str(x) for x in dec["a"]], "b": [str(x) for x in dec["b"]],
                      "basis": [[str(x) for x in r] for r in B], **info}

@@ -1,0 +1,10 @@
+{
+ "label": "p23a",
+ "d": "-3+4*r2",
+ "n": 4,
+ "n_symmetries": 19,
+ "n_pure_translations": 0,
+ "decompositions": [],
+ "outcome": "no decomposition (no pure translation among short words)",
+ "seconds": 0.38509607315063477
+}

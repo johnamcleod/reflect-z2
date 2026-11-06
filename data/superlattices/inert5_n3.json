@@ -1,0 +1,10 @@
+{
+ "label": "inert5",
+ "d": "5+5*r2",
+ "n": 3,
+ "n_symmetries": 2,
+ "n_pure_translations": 0,
+ "decompositions": [],
+ "outcome": "no decomposition (no pure translation among short words)",
+ "seconds": 0.06901288032531738
+}

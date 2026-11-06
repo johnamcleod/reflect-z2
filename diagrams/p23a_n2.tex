@@ -1,0 +1,14 @@
+\begin{tikzpicture}[scale=2.2,v/.style={circle,draw,fill=white,inner sep=1.2pt,font=\tiny}]
+  \node[v] (0) at (1.000,0.000) {1};
+  \node[v] (1) at (0.309,0.951) {2};
+  \node[v] (2) at (-0.809,0.588) {3};
+  \node[v] (3) at (-0.809,-0.588) {4};
+  \node[v] (4) at (0.309,-0.951) {5};
+  \draw (0) -- node[fill=white,inner sep=0.5pt,font=\tiny] {4} (1);
+  \draw (0) -- (2);
+  \draw[dashed] (0) -- (3);
+  \draw[dashed] (0) -- (4);
+  \draw[dashed] (1) -- (2);
+  \draw[dashed] (1) -- (4);
+  \draw[dashed] (2) -- (3);
+\end{tikzpicture}
