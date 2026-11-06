@@ -67,12 +67,12 @@
  },
  "batches": 1,
  "max_delta_processed": 0.7071067811865476,
- "seconds": 0.02079606056213379,
+ "seconds": 0.03489398956298828,
  "caps": {
-  "delta_max": 3000.0,
-  "max_roots": 150,
+  "delta_max": 5000.0,
+  "max_roots": 120,
   "max_batches": 100000,
-  "time_limit": 900.0,
+  "time_limit": 300.0,
   "stopped_by": null
  },
  "coxeter_edges": [
@@ -87,7 +87,9 @@
    8
   ]
  ],
- "coxiter": {
+ "coxiter_graph": "3 2\n1 2 4\n1 3 8\n",
+ "label": "",
+ "coxiter_check": {
   "cocompact": "yes",
   "finite_covolume": "yes",
   "f_vector": [
@@ -98,7 +100,5 @@
   "vertices_at_infinity": "0",
   "euler": "-1/16",
   "dimension": "2"
- },
- "label": "",
- "coxiter_graph": "3 2\n1 2 4\n1 3 8\n"
+ }
 }

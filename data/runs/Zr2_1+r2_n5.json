@@ -180,12 +180,12 @@
  },
  "batches": 13,
  "max_delta_processed": 28.14213562373095,
- "seconds": 0.02768731117248535,
+ "seconds": 0.03670692443847656,
  "caps": {
-  "delta_max": 3000.0,
-  "max_roots": 150,
+  "delta_max": 5000.0,
+  "max_roots": 120,
   "max_batches": 100000,
-  "time_limit": 900.0,
+  "time_limit": 300.0,
   "stopped_by": null
  },
  "coxeter_edges": [
@@ -265,7 +265,9 @@
    "dotted"
   ]
  ],
- "coxiter": {
+ "coxiter_graph": "10 5\n1 2 3\n1 6 8\n1 8 3\n2 3 3\n2 9 1\n3 4 3\n3 7 8\n4 5 4\n4 8 4\n5 8 4\n5 9 1\n5 10 1\n6 10 1\n7 10 1\n9 10 1\n",
+ "label": "",
+ "coxiter_check": {
   "cocompact": "yes",
   "finite_covolume": "yes",
   "f_vector": [
@@ -279,7 +281,5 @@
   "vertices_at_infinity": "0",
   "euler": "0",
   "dimension": "5"
- },
- "label": "",
- "coxiter_graph": "10 5\n1 2 3\n1 6 8\n1 8 3\n2 3 3\n2 9 1\n3 4 3\n3 7 8\n4 5 4\n4 8 4\n5 8 4\n5 9 1\n5 10 1\n6 10 1\n7 10 1\n9 10 1\n"
+ }
 }

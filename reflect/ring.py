@@ -412,22 +412,32 @@ class Ring:
             for a in range(hi, lo - 1, -1):
                 yield QI(a, 0)
             return
-        # |x| <= sqrt(r) =: A, |sx| <= sqrt(sr) =: B.  x = a + b r2:
-        # a = (x + sx)/2, b = (x - sx)/(2 r2)  =>  |a| <= (A+B)/2, |b| <= (A+B)/(2 r2)
+        # |x| <= sqrt(r) =: A, |sx| <= sqrt(sr) =: B, x = a + b r2.  For each b the
+        # admissible a form an interval; floats only choose the (widened) interval, the
+        # membership test is exact integer arithmetic.
+        if not (r.is_integral()):
+            raise ValueError("squares_bounded needs an integral r")
+        ra, rb = int(r.a), int(r.b)
         A = math.sqrt(max(r.f(), 0.0))
         B = math.sqrt(max(r.fs(), 0.0))
-        amax = int((A + B) / 2 + 2)
-        bmax = int((A + B) / (2 * SQRT2) + 2)
+        bmax = int((A + B) / (2 * SQRT2)) + 2
         out = []
         for b in range(-bmax, bmax + 1):
-            for a in range(-amax, amax + 1):
-                x = QI(a, b)
-                if lower_zero and x.sign() < 0:
+            bs = b * SQRT2
+            lo = max(-A - bs, -B + bs)
+            hi = min(A - bs, B + bs)
+            if lo > hi + 2:
+                continue
+            for a in range(int(math.floor(lo)) - 1, int(math.ceil(hi)) + 2):
+                ta, tb = ra - a * a - 2 * b * b, rb - 2 * a * b
+                if _sgn(ta, tb) < 0 or _sgn(ta, -tb) < 0:
                     continue
+                if lower_zero and _sgn(a, b) < 0:
+                    continue
+                x = QI(a, b)
                 if upper is not None and x.gt(upper):
                     continue
-                if self.is_totally_nonneg(r - x * x):
-                    out.append(x)
+                out.append(x)
         out.sort(key=lambda z: -z.f())
         yield from out
 
@@ -542,3 +552,15 @@ def primes_above(p: int) -> Tuple[QI, ...]:
 
 ZZ = Ring("Z", real_quadratic=False)
 ZS2 = Ring("Z[sqrt2]", real_quadratic=True)
+
+
+def xgcd(ring: Ring, x: QI, y: QI):
+    """Extended Euclid in the ring: returns (g, s, t) with s x + t y = g = gcd(x, y)."""
+    x, y = QI.of(x), QI.of(y)
+    r0, r1, s0, s1, t0, t1 = x, y, ONE, ZERO, ZERO, ONE
+    while not r1.is_zero():
+        q, r = ring.divmod(r0, r1)
+        r0, r1 = r1, r
+        s0, s1 = s1, s0 - q * s1
+        t0, t1 = t1, t0 - q * t1
+    return r0, s0, t0

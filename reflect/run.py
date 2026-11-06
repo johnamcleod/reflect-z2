@@ -30,6 +30,9 @@ def run_one(ring, d: QI, n: int, label: str = "", crosscheck: bool = True, **cap
     res = vinberg(ring, d, n, **caps)
     out = res.to_json()
     out["label"] = label
+    if res.status != "reflective":       # O(N^2) data only kept for finished polytopes
+        out.pop("coxeter_edges", None)
+        out.pop("coxiter_graph", None)
     if crosscheck and tools_available():
         if res.status == "reflective":
             cx = run_coxiter(res.coxiter)
