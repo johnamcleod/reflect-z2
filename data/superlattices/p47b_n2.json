@@ -1,0 +1,10 @@
+{
+ "label": "p47b",
+ "d": "5+6*r2",
+ "n": 2,
+ "n_symmetries": 1,
+ "n_pure_translations": 0,
+ "decompositions": [],
+ "outcome": "no decomposition (no pure translation among short words)",
+ "seconds": 0.11282491683959961
+}

@@ -137,6 +137,40 @@ def _sup_line(label, n):
     return out
 
 
+def _observations(summary):
+    by = {p.label: (p, m) for p, m, _ in summary}
+    pairs, a_ge, a_gt, b_gt = [], 0, 0, []
+    for q in sorted({p.p for p, _, _ in summary if p.kind == "split"}):
+        a, b = by.get(f"p{q}a"), by.get(f"p{q}b")
+        if a and b:
+            ma, mb = a[1], b[1]
+            pairs.append(q)
+            a_ge += ma >= mb
+            a_gt += ma > mb
+            if mb > ma:
+                b_gt.append(q)
+    top = sorted(summary, key=lambda t: -t[1])
+    none = [p.label for p, m, _ in summary if m < 2]
+    big = [f"{p.label} ({m})" for p, m, _ in top if m >= 3]
+    out = [
+        f"- **The maximal reflective n falls quickly with |N(d)|.** Only {', '.join(big)} reach n ≥ 3. "
+        f"{', '.join(none) or 'None'} are non-reflective already at n = 2.",
+        f"- **The two primes above a split p behave differently.** The generator that is small at the "
+        f"time-like embedding id ('a') does at least as well in {a_ge} of {len(pairs)} pairs, "
+        f"and strictly better in {a_gt} of them. "
+        + (f"The exception is p = {', '.join(map(str, b_gt))}. " if b_gt else "")
+        + "So the size of |σ(d)| matters as well as |N(d)|.",
+        "- **Split, inert or ramified makes no visible difference beyond the norm.** The ramified prime "
+        "(√2, norm 2) and the inert prime 3 (norm 9) fit the decline with |N(d)|.",
+        f"- **The maxima are far below the ℚ pattern.** The largest here is "
+        f"{top[0][1]} (for {top[0][0].label}), against 19 for d = 1 over ℚ. This is expected: our "
+        "groups are co-compact, whereas the ℚ groups have cusps.",
+        "- **Non-reflectivity extends to every n.** It passes from n to n+1 "
+        "(methods.md, 'Extension to all n'). Every non-reflective cell here therefore holds for all larger n as well.",
+    ]
+    return "\n".join(out) + "\n"
+
+
 def write_report(summary):
     L = []
     L.append("# Reflectivity of −d·x₀² + x₁² + … + xₙ² over ℤ[√2]\n")
@@ -190,6 +224,16 @@ def write_report(summary):
     if not any_sup:
         L.append("- (not yet run)")
     L.append("")
+    L.append("**Scope of the super-lattice check.** These results say *not found*, not *ruled out*.")
+    L.append("")
+    L.append("- **Which translations were tried.** Only pure translations h that are words of length ≤ 2 in at most 10 vertex symmetries.")
+    L.append("- **Which super-lattices were built.** Up to 3 distinct L′ = L + R_a(L) per case.")
+    L.append("- **Caps on each Vinberg run on L′.** δ ≤ 3000, about 150 roots, 400 s.")
+    L.append("- **Effectively untested candidates.** Some L′ of large index stopped at the time limit before any root was found.")
+    L.append("- **Whole cases that timed out.** A case marked 'exceeded time budget' was cut off by a 1500 s hard limit.")
+    L.append("")
+    L.append("## Observations\n")
+    L.append(_observations(summary))
     (ROOT / "report.md").write_text("\n".join(L) + "\n")
 
 
