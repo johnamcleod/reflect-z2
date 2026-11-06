@@ -36,3 +36,43 @@ Each item lists what we would need to see before we stop treating it as an assum
   - small Vinberg caps on each L′.
 - **Effectively untested.** Some large-index L′ hit their time limit before any root was found, and p31b and p41a (n = 3) exceeded the 1500 s case budget.
 - **To close the question.** A conclusive answer needs either a proof that no L′ arising from such a decomposition is reflective, or much larger runs.
+
+## OQ4: 522 table entries vs "432 lattices" (Mark, arXiv:1512.01133)
+
+- **Observation.** The abstract and Theorem 1 say 432 lattices. The appendix of the TeX source (v1, the only arXiv version) has 522 entries, none commented out, and all 522 pass our exact consistency checks (tests/test_mark_table.py).
+- **Duplicates exist.** The table lists some lattices several times. For example, ⟨−(−1+2√2),1,1⟩ is isometric to 6 different entries; see data/isometries/.
+- **Unresolved.** Whether the duplicates account for exactly 90 = 522 − 432 is not checked. Checking needs full root cycles for the "(…)²" entries, whose tables list only half the roots.
+- **Effect on the classification.** None. The classification uses only that every reflective SSF lattice appears *at least once*. The published version (Math. Proc. Camb. Phil. Soc. 164 (2018)) was not consulted. If it differs, it should be compared.
+
+## OQ5: isometry calibration relies on Mark's chambers
+
+- **What a missing match would prove.** If no entry is isometric to ⟨−d,1,1⟩, that is a proof of non-isometry only if each entry's listed roots are simple roots of a chamber of that lattice.
+- **What we check instead.** We only check consistency: the listed vectors are roots, pairwise non-obtuse, with the printed angles.
+- **Why this does not affect the classification.** The classification decides every candidate d directly with our own Vinberg runs and certificates. Positive matches are explicit isometries, checked exactly.
+
+## OQ6: Bogachev's rank-4 table and an AlVin issue with non-reduced coefficients
+
+**Source.** Bogachev, "From geometry to arithmetic of compact hyperbolic Coxeter polytopes", arXiv:2003.11944, Table "tab:stably-details". It lists the sub-2-reflective (stably reflective) Lorentzian lattices of signature (3,1) over ℤ[√2]. Here "stable" means (e,e) | 2, i.e. root norms 1, 2 and 2+√2.
+
+**How the diagonal rows match our grid at n = 3:**
+
+| Bogachev | d | our case | agreement |
+|---|---|---|---|
+| L(1) | 1+√2 | unit | identical root sets |
+| L(2) | 1+2√2 | p7b | identical root sets |
+| L(3) | 5+4√2 | p7a | identical root sets |
+| L(5) | √2 | ram2 | identical root sets |
+| L(4) | 11+8√2 = (1+2√2)ε² | isometric to L(2), via x₀ ↦ εx₀ | see below |
+| L(9) | 7+5√2 = (1+√2)ε² | isometric to L(1) | see below |
+
+**The two problem rows.**
+- The root lists for L(4) and L(9) differ from the L(2) and L(1) chambers.
+- AlVin at our pinned commit reproduces them: ⟨−(7+5√2),1,1,1⟩ gives Bogachev's L(9) list, and ⟨−(11+8√2),1,1,1⟩ gives 17 roots, whose first 9 are Bogachev's L(4) list.
+- In both cases AlVin misses the root r = (√2−1, 1+√2, 0, 0) of L_D. It is non-obtuse to the stabiliser roots, its δ (0.707, resp. 1.914) is smaller than that of AlVin's first accepted root, and it is obtuse to that root. So Vinberg's algorithm must accept r first.
+- **Likely cause:** AlVin skips k₀ with 0 < k₀ < 1 at id. This matters only when the coefficient is not reduced modulo unit squares.
+- **Our code** gives the same chamber for D and for the reduced d (tests/test_calibration.py::test_unit_square_rescaling_gives_same_chamber).
+
+**Consequences.**
+- Our AlVin cross-checks all use reduced d (`canonical`), so they are unaffected. Guglielmetti's 5+4√2 is non-reduced too, but AlVin agrees with us there.
+- Bogachev's table then appears to contain 5 distinct lattices, not 7. Its sub-2-reflectivity conclusions for L(4) and L(9) still hold, because they are isometric to L(2) and L(1).
+- This has not been reported to the authors. The Doklady paper itself was not accessible.

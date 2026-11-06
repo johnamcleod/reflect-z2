@@ -136,3 +136,26 @@ Following thesis Fig. 3.2, where an infinite-order isometry is a product of two 
 ## Outputs
 
 `results.csv`, `diagrams/` (TikZ, PNG, JSON roots and Gram matrices), `data/certs/*.json`, `verify_certificate.py`, `report.md`, and `tests/`.
+
+## Brief 2: complete classification over ℤ[√2] (additional_notes.md §7)
+
+- **Inputs.**
+  - The monotonicity lemma (docs/monotonicity.md): the reflective n for each d form an interval {2, …, N(d)}.
+  - Mark's theorem: every strongly squarefree reflective rank-3 lattice over ℤ[√2] appears in her table. If (d) is squarefree, ⟨−d,1,1⟩ is strongly squarefree (for rank 3 this means det squarefree).
+- **Table.**
+  - `tools/parse_mark.py` reads the TeX source of arXiv:1512.01133 (Appendix B) into `data/mark_table.json`. The source itself is not committed.
+  - `reflect/mark.py` checks every entry exactly:
+    - symmetric Gram matrix, signature (2,1) at id, positive definite at σ;
+    - det = δ, with N(δ) as printed;
+    - (δ) squarefree, form unscaled;
+    - the listed vectors are roots of the stated norms;
+    - pairwise non-obtuse, with the printed angle string.
+- **Candidates.** C = {canonical(−δ)} over all entries (`reflect/candidates.py`), 70 values.
+  - −δ is admissible for every entry: δ < 0 at id and σ(δ) > 0.
+  - Totally positive units are squares, so each entry gives exactly one d.
+- **Decision.** Every d ∈ C is decided directly at n = 2 (`reflect/decide2.py`): our Vinberg run either terminates, or a certificate is found. D ⊆ C is the reflective set. Every squarefree admissible d ∉ C is non-reflective for all n ≥ 2, by Mark plus the lemma.
+- **Calibration (d)** (`reflect/isometry.py`).
+  - For d ∈ D, an isometry ⟨−d,1,1⟩ → L carries chambers to chambers after composing with W. So it maps Mark's listed simple roots r_i to u_i·s_j, where s_j are our simple roots and u_i are units positive at id: a simple root is fixed by its mirror only up to such a unit.
+  - We enumerate these injections, solve for φ on three independent roots, and keep φ iff φ and φ⁻¹ are integral and φᵀFφ = G.
+  - Each d ∈ D must match at least one entry.
+- **Calibration (e)** (`reflect/facet.py`): for each terminated pair (d, n), (d, n+1), the facet −v_{n+1}^⊥ reproduces the (d, n) polytope.
