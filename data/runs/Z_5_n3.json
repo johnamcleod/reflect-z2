@@ -1,0 +1,171 @@
+{
+ "ring": "Z",
+ "d": "5",
+ "n": 3,
+ "status": "reflective",
+ "n_roots": 6,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1",
+    "0"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "2",
+    "5",
+    "0",
+    "0"
+   ],
+   "m": "5",
+   "delta": "4",
+   "delta_float": 4.0,
+   "batch": 5
+  },
+  {
+   "k": [
+    "1",
+    "2",
+    "1",
+    "1"
+   ],
+   "m": "1",
+   "delta": "5",
+   "delta_float": 5.0,
+   "batch": 7
+  },
+  {
+   "k": [
+    "3",
+    "5",
+    "5",
+    "0"
+   ],
+   "m": "5",
+   "delta": "9",
+   "delta_float": 9.0,
+   "batch": 9
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1",
+     "0"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 6,
+  "ideal_vertices": 1,
+  "edges": 11,
+  "open_edges": 0
+ },
+ "batches": 9,
+ "max_delta_processed": 9.0,
+ "seconds": 0.003016233444213867,
+ "caps": {
+  "delta_max": 400.0,
+  "max_roots": 150,
+  "max_batches": 100000,
+  "time_limit": 900.0,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   3
+  ],
+  [
+   0,
+   3,
+   "dotted"
+  ],
+  [
+   0,
+   4,
+   4
+  ],
+  [
+   1,
+   2,
+   4
+  ],
+  [
+   1,
+   5,
+   "dotted"
+  ],
+  [
+   2,
+   4,
+   "inf"
+  ],
+  [
+   3,
+   5,
+   "inf"
+  ]
+ ],
+ "coxiter": {
+  "cocompact": "no",
+  "finite_covolume": "yes",
+  "f_vector": [
+   7,
+   11,
+   6,
+   1
+  ],
+  "vertices_at_infinity": "1",
+  "euler": "0",
+  "dimension": "3"
+ },
+ "label": "",
+ "coxiter_graph": "6 3\n1 2 3\n1 4 1\n1 5 4\n2 3 4\n2 6 1\n3 5 0\n4 6 0\n"
+}

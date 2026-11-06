@@ -1,0 +1,198 @@
+{
+ "ring": "Z",
+ "d": "5",
+ "n": 4,
+ "status": "reflective",
+ "n_roots": 7,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1",
+    "0",
+    "0"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1",
+    "1",
+    "0"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "1",
+    "2",
+    "1",
+    "1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "5/2",
+   "delta_float": 2.5,
+   "batch": 4
+  },
+  {
+   "k": [
+    "2",
+    "5",
+    "0",
+    "0",
+    "0"
+   ],
+   "m": "5",
+   "delta": "4",
+   "delta_float": 4.0,
+   "batch": 5
+  },
+  {
+   "k": [
+    "3",
+    "5",
+    "5",
+    "0",
+    "0"
+   ],
+   "m": "5",
+   "delta": "9",
+   "delta_float": 9.0,
+   "batch": 9
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0",
+     "0",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1",
+     "0",
+     "0"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 9,
+  "ideal_vertices": 1,
+  "edges": 21,
+  "open_edges": 0
+ },
+ "batches": 9,
+ "max_delta_processed": 9.0,
+ "seconds": 0.004485130310058594,
+ "caps": {
+  "delta_max": 400.0,
+  "max_roots": 150,
+  "max_batches": 100000,
+  "time_limit": 900.0,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   3
+  ],
+  [
+   0,
+   4,
+   3
+  ],
+  [
+   0,
+   5,
+   "dotted"
+  ],
+  [
+   1,
+   2,
+   3
+  ],
+  [
+   1,
+   6,
+   "dotted"
+  ],
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   3,
+   4,
+   4
+  ],
+  [
+   5,
+   6,
+   "inf"
+  ]
+ ],
+ "coxiter": {
+  "cocompact": "no",
+  "finite_covolume": "yes",
+  "f_vector": [
+   10,
+   21,
+   18,
+   7,
+   1
+  ],
+  "vertices_at_infinity": "1",
+  "euler": "13/960",
+  "dimension": "4"
+ },
+ "label": "",
+ "coxiter_graph": "7 4\n1 2 3\n1 5 3\n1 6 1\n2 3 3\n2 7 1\n3 4 4\n4 5 4\n6 7 0\n"
+}

@@ -1,0 +1,104 @@
+{
+ "ring": "Z[sqrt2]",
+ "d": "1+r2",
+ "n": 2,
+ "status": "reflective",
+ "n_roots": 3,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "1",
+    "1+r2",
+    "0"
+   ],
+   "m": "2+r2",
+   "delta": "1/2*r2",
+   "delta_float": 0.7071067811865476,
+   "batch": 1
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 3,
+  "ideal_vertices": 0,
+  "edges": 3,
+  "open_edges": 0
+ },
+ "batches": 1,
+ "max_delta_processed": 0.7071067811865476,
+ "seconds": 0.02079606056213379,
+ "caps": {
+  "delta_max": 3000.0,
+  "max_roots": 150,
+  "max_batches": 100000,
+  "time_limit": 900.0,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   4
+  ],
+  [
+   0,
+   2,
+   8
+  ]
+ ],
+ "coxiter": {
+  "cocompact": "yes",
+  "finite_covolume": "yes",
+  "f_vector": [
+   3,
+   3,
+   1
+  ],
+  "vertices_at_infinity": "0",
+  "euler": "-1/16",
+  "dimension": "2"
+ },
+ "label": "",
+ "coxiter_graph": "3 2\n1 2 4\n1 3 8\n"
+}

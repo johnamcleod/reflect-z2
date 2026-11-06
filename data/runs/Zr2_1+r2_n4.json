@@ -1,0 +1,193 @@
+{
+ "ring": "Z[sqrt2]",
+ "d": "1+r2",
+ "n": 4,
+ "status": "reflective",
+ "n_roots": 7,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1",
+    "0",
+    "0"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1",
+    "1",
+    "0"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "1",
+    "1+r2",
+    "0",
+    "0",
+    "0"
+   ],
+   "m": "2+r2",
+   "delta": "1/2*r2",
+   "delta_float": 0.7071067811865476,
+   "batch": 1
+  },
+  {
+   "k": [
+    "1+r2",
+    "1+r2",
+    "1+r2",
+    "1+r2",
+    "0"
+   ],
+   "m": "2+r2",
+   "delta": "2+3/2*r2",
+   "delta_float": 4.121320343559643,
+   "batch": 4
+  },
+  {
+   "k": [
+    "2+r2",
+    "2+r2",
+    "1+r2",
+    "1+r2",
+    "1+r2"
+   ],
+   "m": "1",
+   "delta": "14+10*r2",
+   "delta_float": 28.14213562373095,
+   "batch": 13
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0",
+     "0",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1",
+     "0",
+     "0"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 13,
+  "ideal_vertices": 0,
+  "edges": 26,
+  "open_edges": 0
+ },
+ "batches": 13,
+ "max_delta_processed": 28.14213562373095,
+ "seconds": 0.022003889083862305,
+ "caps": {
+  "delta_max": 3000.0,
+  "max_roots": 150,
+  "max_batches": 100000,
+  "time_limit": 900.0,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   3
+  ],
+  [
+   0,
+   4,
+   8
+  ],
+  [
+   0,
+   6,
+   4
+  ],
+  [
+   1,
+   2,
+   3
+  ],
+  [
+   2,
+   3,
+   4
+  ],
+  [
+   2,
+   5,
+   8
+  ],
+  [
+   3,
+   6,
+   "dotted"
+  ]
+ ],
+ "coxiter": {
+  "cocompact": "yes",
+  "finite_covolume": "yes",
+  "f_vector": [
+   13,
+   26,
+   20,
+   7,
+   1
+  ],
+  "vertices_at_infinity": "0",
+  "euler": "11/768",
+  "dimension": "4"
+ },
+ "label": "",
+ "coxiter_graph": "7 4\n1 2 3\n1 5 8\n1 7 4\n2 3 3\n3 4 4\n3 6 8\n4 7 1\n"
+}
