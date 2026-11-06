@@ -106,7 +106,8 @@ For a case that does not terminate we look for g ∈ O'(L) of infinite order wit
    - So g(P) and P have the same local cone at v′, and therefore share interior points. g normalises W, so g(P) is a W-chamber, and two chambers with a common interior point are equal. Hence g(P) = P.
    - The certificate lists S, S′, r, r′ and the bijection. The verifier re-checks that S and S′ are elliptic, that their Gram matrices match, that every listed vector is a root of L, and that each root is a facet. The facet check is not certifiable from JSON alone, since it relies on the run that produced the roots. The verifier re-runs the deterministic Vinberg prefix up to the largest δ involved and confirms that the roots appear in it.
    - Doubts about this step are recorded in OPEN_QUESTIONS.md.
-5. **AlVin cross-check.** We compare with the output of AlVin's infinite-symmetry module where it reports one.
+5. **Base vertex.** Normally S is the stabiliser simple system at v₀ (its roots are facets by step 1 of Vinberg's algorithm), and r = v₀. If no certificate is found that way, `search(..., any_base=True)` also tries every other found elliptic rank-n set S as the base, with v = its vertex vector. A product of two finite-order symmetries with different bases is still a symmetry of P, since each factor is. For such certificates the verifier always runs the facets check, on S_from as well as S_to, even without `--facets`. This was needed only for p47b at n = 2.
+6. **AlVin cross-check.** We compare with the output of AlVin's infinite-symmetry module where it reports one.
 
 ### Reflective super-lattice check (for each certificate)
 

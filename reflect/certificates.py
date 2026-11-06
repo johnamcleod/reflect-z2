@@ -177,7 +177,7 @@ def check_isometry(d: QI, n: int, g) -> Dict:
 
 
 def search(d: QI, n: int, roots: List[Sequence[QI]], max_vertices: int = 100000,
-           log: bool = False) -> Dict:
+           log: bool = False, any_base: bool = False) -> Dict:
     """Search symmetries of P mapping the v0-vertex to other found vertices.
 
     Returns {"certificate": ... or None, "symmetries": [...finite-order ones...]}."""
@@ -185,13 +185,25 @@ def search(d: QI, n: int, roots: List[Sequence[QI]], max_vertices: int = 100000,
     for i, k in enumerate(roots):
         row = [form(d, roots[j], k) for j in range(i)] + [form(d, k, k)]
         diag.add(row, row[-1])
-    S0 = list(range(n))
-    G0 = [[diag.Gq[i][j] for j in S0] for i in S0]
-    norms0 = [diag.norms[i] for i in S0]
-    v0 = [ONE] + [ZERO] * n
+    tops = sorted(diag.ell_top, key=lambda s: sorted(s))
+    bases = [list(range(n))]
+    if any_base:  # every found vertex as base (its roots must then be checked as facets too)
+        bases += [sorted(S) for S in tops if S != frozenset(range(n))]
     finite_syms = []
     tried = 0
-    for S in sorted(diag.ell_top, key=lambda s: sorted(s)):
+    for S0 in bases:
+        res = _search_from(d, n, roots, diag, S0, tops, finite_syms, max_vertices, log, tried)
+        if isinstance(res, dict):
+            return res
+        tried = res
+    return _finish(d, n, roots, finite_syms, tried)
+
+
+def _search_from(d, n, roots, diag, S0, tops, finite_syms, max_vertices, log, tried):
+    G0 = [[diag.Gq[i][j] for j in S0] for i in S0]
+    norms0 = [diag.norms[i] for i in S0]
+    v0 = [ONE] + [ZERO] * n if S0 == list(range(n)) else vertex_vector(d, [roots[i] for i in S0])
+    for S in tops:
         if S == frozenset(S0):
             continue
         Sl = sorted(S)
@@ -221,6 +233,10 @@ def search(d: QI, n: int, roots: List[Sequence[QI]], max_vertices: int = 100000,
                 print("  finite-order symmetry ->", img)
         if tried > max_vertices:
             break
+    return tried
+
+
+def _finish(d, n, roots, finite_syms, tried):
     # products of two finite-order symmetries
     for s1, s2 in itertools.combinations(finite_syms, 2):
         g = matmul(s1["g"], s2["g"])
@@ -255,5 +271,6 @@ def _make_cert(d, n, roots, syms, br, product=False) -> Dict:
                                "charpoly": [str(c) for c in chi],
                                "bracket": [str(a), str(b)]},
             "facet_roots_needed": sorted({tuple(str(x) for x in roots[i])
-                                          for s in syms for i in s["S1"]}),
+                                          for s in syms for i in list(s["S1"]) + (
+                                              [] if s["S0"] == list(range(n)) else list(s["S0"]))}),
             "n_roots_used": len(roots)}

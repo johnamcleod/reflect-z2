@@ -17,10 +17,11 @@ certificate with factors g_1 (, g_2) and g = g_1 (g_2) it checks:
   7. g = product of the factors, and the characteristic polynomial of g recomputed
      here equals the stored one and changes sign on the stored interval (a, b) with
      a > 1 (exact signs at id): g has a real eigenvalue > 1, hence infinite order;
-  8. (--facets) the roots of every S_to are facets of P: re-runs the deterministic
-     Vinberg algorithm (reflect.vinberg) up to their distance and finds them.
-     S_from is always the stabiliser simple system of v0, i.e. facets of P by step 1 of
-     Vinberg's algorithm.
+  8. (--facets) the roots of every S_to and S_from are facets of P: re-runs the
+     deterministic Vinberg algorithm (reflect.vinberg) up to their distance and finds them.
+     When S_from is the stabiliser simple system of v0 its roots are facets by step 1 of
+     Vinberg's algorithm; otherwise (a general base vertex) this step is run
+     automatically, even without --facets.
 
 Given 1-8, g_i(P) = P for each factor (methods.md, Phase 3 step 4), so g is an
 infinite-order element of Sym(P) and L is not reflective.
@@ -190,6 +191,7 @@ def verify(cert, check_facets=False):
                 and divides(m, mul(mul((Fraction(2), Fraction(0)), d), k[0])))
 
     gs = []
+    needs_facets = False
     for i, fac in enumerate(cert["factors"]):
         g = [[parse(x) for x in row] for row in fac["g"]]
         tag = f"factor {i}"
@@ -214,7 +216,8 @@ def verify(cert, check_facets=False):
         k = [Z0] * N
         k[n] = neg(Z1)
         stab.append(k)
-        assert S_from == stab, f"{tag}: S_from is not the stabiliser simple system"
+        if S_from != stab:  # a general base vertex: its roots must be shown to be facets
+            needs_facets = True
         for S in (S_from, S_to):
             assert all(is_root(s) for s in S), f"{tag}: vertex vector is not a root"
             G = [[form(a, b) for b in S] for a in S]
@@ -232,7 +235,7 @@ def verify(cert, check_facets=False):
     assert 1 < a < b
     sa, sb = sign(peval(chi, (a, Fraction(0)))), sign(peval(chi, (b, Fraction(0))))
     assert sa * sb < 0, "no sign change: eigenvalue > 1 not certified"
-    if check_facets:
+    if check_facets or needs_facets:
         _check_facets(cert)
     return True
 
@@ -244,7 +247,8 @@ def _check_facets(cert):
     from reflect.vinberg import vinberg
     d = QI.parse(cert["d"])
     n = cert["n"]
-    need = {tuple(QI.parse(x) for x in r) for fac in cert["factors"] for r in fac["vertex_to"]}
+    need = {tuple(QI.parse(x) for x in r) for fac in cert["factors"]
+            for r in fac["vertex_to"] + fac["vertex_from"]}
     # distance of the farthest needed root: delta = d k0^2 / m
     def delta(k):
         m = -d * k[0] * k[0] + sum((x * x for x in k[1:]), QI(0))

@@ -67,3 +67,34 @@ def test_wrong_d_fails():
     c = _first()
     c["d"] = "2+r2" if c["d"] != "2+r2" else "3+r2"
     _expect_fail(c)
+
+
+def _stab(n):
+    rows = [["0"] * (n + 1) for _ in range(n)]
+    for j in range(1, n):
+        rows[j - 1][j], rows[j - 1][j + 1] = "-1", "1"
+    rows[n - 1][n] = "-1"
+    return rows
+
+
+def _is_general(path):
+    c = json.loads(path.read_text())
+    return any(f["vertex_from"] != _stab(c["n"]) for f in c["factors"])
+
+
+GENERAL = [p for p in CERTS if _is_general(p)]
+
+
+@pytest.mark.parametrize("path", GENERAL, ids=lambda p: p.stem)
+def test_general_base_certificate_checks_its_base_facets(path):
+    """Certificates whose base vertex is not the v0-stabiliser vertex: the verifier must
+    re-establish S_from as facets of P, and a fake base root must be rejected."""
+    c = json.loads(path.read_text())
+    assert V.verify(c, check_facets=False)       # facets check runs automatically
+    bad = copy.deepcopy(c)
+    f = bad["factors"][0]
+    f["vertex_from"] = [r for r in f["vertex_from"]]
+    # replace a base root by a non-facet root of L: twice a facet direction is not primitive
+    f["vertex_from"][-1] = [str(QI.parse(x) * 2) for x in f["vertex_from"][-1]]
+    with pytest.raises(AssertionError):
+        V.verify(bad, check_facets=False)

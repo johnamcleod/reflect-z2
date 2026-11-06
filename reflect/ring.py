@@ -447,10 +447,14 @@ class Ring:
             for a in range(-int(A), int(A) + 1):
                 yield QI(a)
             return
-        amax = int((A + B) / 2 + 1)
-        bmax = int((A + B) / (2 * SQRT2) + 1)
-        for a in range(-amax, amax + 1):
-            for b in range(-bmax, bmax + 1):
+        bmax = int((A + B) / (2 * SQRT2)) + 2
+        for b in range(-bmax, bmax + 1):
+            bs = b * SQRT2
+            lo = max(-A - bs, -B + bs)
+            hi = min(A - bs, B + bs)
+            if lo > hi + 2:
+                continue
+            for a in range(int(math.floor(lo)) - 1, int(math.ceil(hi)) + 2):
                 x = QI(a, b)
                 if abs(x.f()) <= A + 1e-12 and abs(x.fs()) <= B + 1e-12:
                     yield x

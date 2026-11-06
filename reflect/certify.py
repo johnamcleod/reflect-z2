@@ -38,6 +38,22 @@ def certify_one(label: str, d: QI, n: int, extend_roots=(400, 800), log=True):
             CERTS.mkdir(parents=True, exist_ok=True)
             cert_path(label, n).write_text(json.dumps(cert, indent=1))
             return cert
+    # any found vertex as base (verifier then re-checks the base roots as facets)
+    def _try_any_base(rts):
+        t = time.time()
+        res = search(d, n, rts, any_base=True, max_vertices=20000)
+        attempts.append({"prefix": len(rts), "any_base": True, "tried": res["tried"],
+                         "s": round(time.time() - t, 2)})
+        if res["certificate"]:
+            cert = res["certificate"]
+            cert["label"] = label
+            cert["search"] = "any_base"
+            cert["attempts"] = attempts
+            cert_path(label, n).write_text(json.dumps(cert, indent=1))
+            return cert
+    c = _try_any_base(roots[:80])
+    if c:
+        return c
     # extend the Vinberg run and retry
     for mr in extend_roots:
         r = vinberg(ZS2, d, n, delta_max=10 ** 5, max_roots=mr, time_limit=1800)
@@ -53,6 +69,9 @@ def certify_one(label: str, d: QI, n: int, extend_roots=(400, 800), log=True):
             cert["attempts"] = attempts
             cert_path(label, n).write_text(json.dumps(cert, indent=1))
             return cert
+        c = _try_any_base(roots[:120])
+        if c:
+            return c
     return {"failed": True, "attempts": attempts}
 
 
@@ -72,7 +91,11 @@ def main(argv):
                 print(f"{p.label:7s} n={n:2d}: certificate exists", flush=True)
                 continue
             t = time.time()
-            c = certify_one(p.label, p.d, n)
+            try:
+                c = certify_one(p.label, p.d, n)
+            except RuntimeError as e:  # became reflective with more roots
+                print(f"{p.label:7s} n={n:2d}: {e}", flush=True)
+                continue
             if c and not c.get("failed"):
                 print(f"{p.label:7s} n={n:2d}: CERTIFIED  factors={len(c['factors'])} "
                       f"eigenvalue in {tuple(c['infinite_order']['bracket'])} "
