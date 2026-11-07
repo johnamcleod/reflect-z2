@@ -96,3 +96,52 @@ Over ℚ the analogous pattern is d = 1, 2, 3, 5, 7, 11, 17 → n = 19, 14, 13, 
 - **The maxima are far below the ℚ pattern.** The largest here is 6 (for unit), against 19 for d = 1 over ℚ. This is expected: our groups are co-compact, whereas the ℚ groups have cusps.
 - **Non-reflectivity extends to every n.** It passes from n to n+1 (methods.md, 'Extension to all n'). Every non-reflective cell here therefore holds for all larger n as well.
 
+
+## Classification over ℤ[√2] (brief 2)
+
+**Method.** The method rests on three facts:
+
+- **Monotonicity lemma** (docs/monotonicity.md): reflectivity at n implies reflectivity at every n′ < n. So the reflective n for each d form an interval {2, …, N(d)}.
+- **Mark's table** (arXiv:1512.01133): ⟨−d,1,1⟩ is strongly squarefree, so if it is reflective it should appear in the table. The 522 table entries give 70 candidate values of d (data/candidates.json).
+- **Direct decision.** Every candidate is decided by our own runs: Vinberg up to N(d), then a certificate at n₀ = N(d)+1, which `verify_certificate.py` re-checks. Every n > n₀ is then non-reflective by the lemma.
+
+**Result.** 27 values of d are reflective, and 44 are non-reflective in every n ≥ 2. The non-reflective ones are the remaining candidates plus the extra conjugate partner dm1_12; each is certified at n = 2.
+
+| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric |
+|---|---|---|---|---|---|---|
+| unit | 1+r2 | -1 | 2–6 | 3, 5, 7, 10, 34 | 7 (unit_n7) | 1 of 1 |
+| ram2 | r2 | -2 | 2–5 | 4, 6, 8, 27 | 6 (ram2_n6) | 1 of 2 |
+| p7a | -1+2*r2 | -7 | 2–5 | 4, 5, 8, 20 | 6 (p7a_n6) | 6 of 10 |
+| p7b | 1+2*r2 | -7 | 2–4 | 4, 6, 9 | 5 (p7b_n5) | 1 of 13 |
+| inert3 | 3+3*r2 | -9 | 2–3 | 4, 12 | 4 (inert3_n4) | 2 of 5 |
+| dm2_3 | -2+3*r2 | -14 | 2–3 | 5, 18 | 4 (dm2_3_n4) | 3 of 15 |
+| p23a | -3+4*r2 | -23 | 2–3 | 5, 10 | 4 (p23a_n4) | 3 of 6 |
+| d2_3 | 2+3*r2 | -14 | 2–2 | 5 | 3 (d2_3_n3) | 2 of 13 |
+| p17a | -1+3*r2 | -17 | 2–2 | 6 | 3 (p17a_n3) | 0 of 8 **(missing, OQ7)** |
+| p17b | 1+3*r2 | -17 | 2–2 | 6 | 3 (p17b_n3) | 1 of 8 |
+| d0_3 | 3*r2 | -18 | 2–2 | 6 | 3 (d0_3_n3) | 3 of 6 |
+| p23b | 3+4*r2 | -23 | 2–2 | 6 | 3 (p23b_n3) | 1 of 8 |
+| inert5 | 5+5*r2 | -25 | 2–2 | 6 | 3 (inert5_n3) | 5 of 5 |
+| p31b | 1+4*r2 | -31 | 2–2 | 8 | 3 (p31b_n3) | 2 of 5 |
+| p41a | -3+5*r2 | -41 | 2–2 | 12 | 3 (p41a_n3) | 2 of 2 |
+| p41b | 3+5*r2 | -41 | 2–2 | 12 | 3 (p41b_n3) | 2 of 2 |
+| p47a | -5+6*r2 | -47 | 2–2 | 10 | 3 (p47a_n3) | 4 of 6 |
+| d7_7 | 7+7*r2 | -49 | 2–2 | 5 | 3 (d7_7_n3) | 2 of 23 |
+| dm6_7 | -6+7*r2 | -62 | 2–2 | 11 | 3 (dm6_7_n3) | 3 of 4 |
+| d3_6 | 3+6*r2 | -63 | 2–2 | 8 | 3 (d3_6_n3) | 2 of 24 |
+| d0_7 | 7*r2 | -98 | 2–2 | 8 | 3 (d0_7_n3) | 2 of 23 |
+| d9_10 | 9+10*r2 | -119 | 2–2 | 8 | 3 (d9_10_n3) | 3 of 10 |
+| dm9_10 | -9+10*r2 | -119 | 2–2 | 12 | 3 (dm9_10_n3) | 3 of 6 |
+| dm6_9 | -6+9*r2 | -126 | 2–2 | 11 | 3 (dm6_9_n3) | 5 of 27 |
+| d1_9 | 1+9*r2 | -161 | 2–2 | 18 | 3 (d1_9_n3) | 4 of 4 |
+| dm1_9 | -1+9*r2 | -161 | 2–2 | 18 | 3 (dm1_9_n3) | 3 of 6 |
+| d1_12 | 1+12*r2 | -287 | 2–2 | 24 | 3 (d1_12_n3) | 5 of 5 |
+
+**Non-reflective for all n** (certificate at n = 2): p31a (-1+4*r2), dm4_5 (-4+5*r2), d4_5 (4+5*r2), dm2_5 (-2+5*r2), d2_5 (2+5*r2), d0_5 (5*r2), d6_7 (6+7*r2), dm3_6 (-3+6*r2), dm4_7 (-4+7*r2), d4_7 (4+7*r2), dm2_7 (-2+7*r2), d2_7 (2+7*r2), dm3_8 (-3+8*r2), d3_8 (3+8*r2), d6_9 (6+9*r2), dm4_9 (-4+9*r2), d4_9 (4+9*r2), dm2_9 (-2+9*r2), dm9_11 (-9+11*r2), d9_11 (9+11*r2), dm4_11 (-4+11*r2), d4_11 (4+11*r2), dm10_13 (-10+13*r2), dm2_11 (-2+11*r2), d2_11 (2+11*r2), d10_13 (10+13*r2), dm12_15 (-12+15*r2), d12_15 (12+15*r2), dm16_17 (-16+17*r2), dm4_13 (-4+13*r2), d4_13 (4+13*r2), d16_17 (16+17*r2), dm10_15 (-10+15*r2), d6_15 (6+15*r2), dm12_17 (-12+17*r2), dm4_15 (-4+15*r2), d4_15 (4+15*r2), d12_17 (12+17*r2), d21_21 (21+21*r2), d6_21 (6+21*r2), d0_21 (21*r2), dm28_35 (-28+35*r2), d28_35 (28+35*r2), dm1_12 (-1+12*r2).
+
+**Caveats.**
+
+- **Mark's table is incomplete (OQ7).** ⟨−(−1+3√2),1,1⟩ (p17a) is reflective: its chamber is the hexagon (π/8, π/4, π/2)², confirmed independently by `reflect.vinberg3`. Yet none of the 8 table entries with its determinant is isometric to it. The table's only hexagon of this shape (entry 173) is p17b. So the step "d outside the candidate list ⇒ non-reflective" is conditional on the table having no further omissions.
+- **Conjugate-partner check.** For every reflective d we checked its conjugate partner −σ(d) directly. All but one were already candidates. The exception, −1+12√2 (partner of the 24-gon d = 1+12√2), is certified non-reflective at n = 2. Reflectivity is not symmetric between partners (for example, p31b is reflective and p31a is not), so this check cannot rule out further omissions.
+- **Duplicates in the table (OQ4).** The 522 entries fall into at least 144 isometry classes. Explicit isometries merge at least 144 entries, so there are at most 378 classes, not 432. That check is incomplete and does not affect the result.
+

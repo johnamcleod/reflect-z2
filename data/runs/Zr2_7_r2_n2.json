@@ -1,0 +1,254 @@
+{
+ "ring": "Z[sqrt2]",
+ "d": "7*r2",
+ "n": 2,
+ "status": "reflective",
+ "n_roots": 8,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "10+6*r2",
+    "0"
+   ],
+   "m": "4+r2",
+   "delta": "31+22*r2",
+   "delta_float": 62.112698372208094,
+   "batch": 32
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "6+5*r2",
+    "6+5*r2"
+   ],
+   "m": "4+r2",
+   "delta": "31+22*r2",
+   "delta_float": 62.112698372208094,
+   "batch": 32
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "8+5*r2",
+    "5+4*r2"
+   ],
+   "m": "3+r2",
+   "delta": "38+27*r2",
+   "delta_float": 76.18376618407356,
+   "batch": 37
+  },
+  {
+   "k": [
+    "4+3*r2",
+    "13+9*r2",
+    "3+r2"
+   ],
+   "m": "6+2*r2",
+   "delta": "38+27*r2",
+   "delta_float": 76.18376618407356,
+   "batch": 37
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "9+6*r2",
+    "3+2*r2"
+   ],
+   "m": "2+r2",
+   "delta": "49+35*r2",
+   "delta_float": 98.49747468305833,
+   "batch": 41
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "8+6*r2",
+    "4+3*r2"
+   ],
+   "m": "2+r2",
+   "delta": "49+35*r2",
+   "delta_float": 98.49747468305833,
+   "batch": 41
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 8,
+  "ideal_vertices": 0,
+  "edges": 8,
+  "open_edges": 0
+ },
+ "batches": 41,
+ "max_delta_processed": 98.49747468305833,
+ "seconds": 4.9310688972473145,
+ "caps": {
+  "delta_max": 100000000.0,
+  "max_roots": 400,
+  "max_batches": 100000,
+  "time_limit": 1800,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   4
+  ],
+  [
+   0,
+   2,
+   "dotted"
+  ],
+  [
+   0,
+   4,
+   "dotted"
+  ],
+  [
+   0,
+   5,
+   "dotted"
+  ],
+  [
+   0,
+   6,
+   "dotted"
+  ],
+  [
+   0,
+   7,
+   "dotted"
+  ],
+  [
+   1,
+   3,
+   "dotted"
+  ],
+  [
+   1,
+   4,
+   "dotted"
+  ],
+  [
+   1,
+   5,
+   "dotted"
+  ],
+  [
+   1,
+   6,
+   "dotted"
+  ],
+  [
+   1,
+   7,
+   "dotted"
+  ],
+  [
+   2,
+   3,
+   "dotted"
+  ],
+  [
+   2,
+   4,
+   "dotted"
+  ],
+  [
+   2,
+   6,
+   "dotted"
+  ],
+  [
+   2,
+   7,
+   "dotted"
+  ],
+  [
+   3,
+   5,
+   "dotted"
+  ],
+  [
+   3,
+   6,
+   "dotted"
+  ],
+  [
+   3,
+   7,
+   "dotted"
+  ],
+  [
+   4,
+   5,
+   "dotted"
+  ],
+  [
+   4,
+   6,
+   "dotted"
+  ],
+  [
+   5,
+   7,
+   "dotted"
+  ]
+ ],
+ "coxiter_graph": "8 2\n1 2 4\n1 3 1\n1 5 1\n1 6 1\n1 7 1\n1 8 1\n2 4 1\n2 5 1\n2 6 1\n2 7 1\n2 8 1\n3 4 1\n3 5 1\n3 7 1\n3 8 1\n4 6 1\n4 7 1\n4 8 1\n5 6 1\n5 7 1\n6 8 1\n",
+ "label": "d0_7",
+ "coxiter_check": {
+  "cocompact": "yes",
+  "finite_covolume": "yes",
+  "f_vector": [
+   8,
+   8,
+   1
+  ],
+  "vertices_at_infinity": "0",
+  "euler": "-9/8",
+  "dimension": "2"
+ }
+}

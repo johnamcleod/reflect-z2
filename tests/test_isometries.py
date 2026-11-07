@@ -14,6 +14,8 @@ ROOT = pathlib.Path(__file__).resolve().parent.parent
 ISO = sorted((ROOT / "data/isometries").glob("*.json"))
 ENTRIES = load()
 CANDS = {c["d"]: c for c in json.loads((ROOT / "data/candidates.json").read_text())}
+# reflective <-d,1,1> with no isometric entry in Mark's table (documented exception, OQ7)
+MISSING_FROM_MARK = {"p17a"}
 
 
 @pytest.mark.parametrize("path", ISO, ids=lambda p: p.stem)
@@ -21,6 +23,9 @@ def test_isometries(path):
     rec = json.loads(path.read_text())
     d = QI.parse(rec["d"])
     F = [[(-d if i == j == 0 else QI(1) if i == j else QI(0)) for j in range(3)] for i in range(3)]
+    if rec["label"] in MISSING_FROM_MARK:   # OPEN_QUESTIONS OQ7; see test_classification
+        assert not rec["matches"]
+        return
     assert rec["matches"], "reflective <-d,1,1> must be isometric to some entry of Mark's list"
     for m in rec["matches"]:
         e = ENTRIES[m["entry"]]

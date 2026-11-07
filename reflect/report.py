@@ -234,7 +234,74 @@ def write_report(summary):
     L.append("")
     L.append("## Observations\n")
     L.append(_observations(summary))
+    L.append("")
+    L += classification_section()
     (ROOT / "report.md").write_text("\n".join(L) + "\n")
+
+
+def classification_section():
+    """Brief 2 (additional_notes.md §7): all squarefree admissible d."""
+    from .classification import build
+    recs = build()
+    for r in recs:                      # diagrams for every reflective cell
+        for n in r["faces"]:
+            write_diagram(r["label"], QI.parse(r["d"]), n, load_run(QI.parse(r["d"]), n))
+    with open(ROOT / "results_classification.csv", "w", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(["label", "d", "N(d)", "in_grid", "mark_entries", "max_reflective_n",
+                    "faces", "n0", "cert_n0", "mark_isometric"])
+        for r in recs:
+            w.writerow([r["label"], r["d"], r["N_d"], r["in_grid"], r["mark_entries"],
+                        r["max_reflective_n"] if r["max_reflective_n"] >= 2 else "none",
+                        " ".join(f"n{n}:{k}" for n, k in sorted(r["faces"].items())),
+                        r["n0"], r["cert_n0"],
+                        r["mark_match"]["isometric"] if r["mark_match"] else ""])
+    refl = sorted([r for r in recs if r["max_reflective_n"] >= 2],
+                  key=lambda r: (-r["max_reflective_n"], abs(r["N_d"]), r["label"]))
+    non = [r for r in recs if r["max_reflective_n"] < 2]
+    L = ["## Classification over ℤ[√2] (brief 2)\n",
+         "**Method.** The method rests on three facts:\n",
+         "- **Monotonicity lemma** (docs/monotonicity.md): reflectivity at n implies reflectivity "
+         "at every n′ < n. So the reflective n for each d form an interval {2, …, N(d)}.",
+         "- **Mark's table** (arXiv:1512.01133): ⟨−d,1,1⟩ is strongly squarefree, so if it is "
+         "reflective it should appear in the table. The 522 table entries give 70 candidate "
+         "values of d (data/candidates.json).",
+         "- **Direct decision.** Every candidate is decided by our own runs: Vinberg up to N(d), "
+         "then a certificate at n₀ = N(d)+1, which `verify_certificate.py` re-checks. Every "
+         "n > n₀ is then non-reflective by the lemma.\n",
+         f"**Result.** {len(refl)} values of d are reflective, and {len(non)} are non-reflective "
+         "in every n ≥ 2. The non-reflective ones are the remaining candidates plus the extra "
+         "conjugate partner dm1_12; each is certified at n = 2.\n",
+         "| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric |",
+         "|---|---|---|---|---|---|---|"]
+    for r in refl:
+        m = r["mark_match"]
+        mm = f"{m['isometric']} of {m['entries_checked']}" if m else "–"
+        if m and m["isometric"] == 0:
+            mm += " **(missing, OQ7)**"
+        L.append(f"| {r['label']} | {r['d']} | {r['N_d']} | 2–{r['max_reflective_n']} | "
+                 + ", ".join(f"{k}" for _, k in sorted(r["faces"].items()))
+                 + f" | {r['n0']} ({r['cert_n0']}) | {mm} |")
+    L.append("")
+    L.append("**Non-reflective for all n** (certificate at n = 2): "
+             + ", ".join(f"{r['label']} ({r['d']})" for r in non) + ".\n")
+    L.append("**Caveats.**\n")
+    L.append("- **Mark's table is incomplete (OQ7).** ⟨−(−1+3√2),1,1⟩ (p17a) is reflective: its "
+             "chamber is the hexagon (π/8, π/4, π/2)², confirmed independently by "
+             "`reflect.vinberg3`. Yet none of the 8 table entries with its determinant is "
+             "isometric to it. The table's only hexagon of this shape (entry 173) is p17b. "
+             "So the step \"d outside the candidate list ⇒ non-reflective\" is conditional on "
+             "the table having no further omissions.")
+    L.append("- **Conjugate-partner check.** For every reflective d we checked its conjugate "
+             "partner −σ(d) directly. All but one were already candidates. The exception, "
+             "−1+12√2 (partner of the 24-gon d = 1+12√2), is certified non-reflective at n = 2. "
+             "Reflectivity is not symmetric between partners (for example, p31b is reflective "
+             "and p31a is not), so this check cannot rule out further omissions.")
+    L.append("- **Duplicates in the table (OQ4).** The 522 entries fall into at least 144 isometry "
+             "classes. Explicit isometries merge at least 144 entries, so there are at most 378 "
+             "classes, not 432. That check is incomplete and does not affect the result.")
+    L.append("")
+    return L
 
 
 if __name__ == "__main__":

@@ -1,0 +1,177 @@
+{
+ "ring": "Z[sqrt2]",
+ "d": "3*r2",
+ "n": 2,
+ "status": "reflective",
+ "n_roots": 6,
+ "roots": [
+  {
+   "k": [
+    "0",
+    "-1",
+    "1"
+   ],
+   "m": "2",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "0",
+    "0",
+    "-1"
+   ],
+   "m": "1",
+   "delta": "0",
+   "delta_float": 0.0,
+   "batch": 0
+  },
+  {
+   "k": [
+    "2+r2",
+    "3+3*r2",
+    "0"
+   ],
+   "m": "3",
+   "delta": "8+6*r2",
+   "delta_float": 16.48528137423857,
+   "batch": 11
+  },
+  {
+   "k": [
+    "2+2*r2",
+    "3+3*r2",
+    "3+3*r2"
+   ],
+   "m": "6",
+   "delta": "8+6*r2",
+   "delta_float": 16.48528137423857,
+   "batch": 11
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "6+4*r2",
+    "2+r2"
+   ],
+   "m": "2+r2",
+   "delta": "21+15*r2",
+   "delta_float": 42.21320343559643,
+   "batch": 20
+  },
+  {
+   "k": [
+    "3+2*r2",
+    "5+4*r2",
+    "3+2*r2"
+   ],
+   "m": "2+r2",
+   "delta": "21+15*r2",
+   "delta_float": 42.21320343559643,
+   "batch": 20
+  }
+ ],
+ "stabiliser": {
+  "type_Bn": true,
+  "sorted_roots": [
+   [
+    "1",
+    [
+     "1",
+     "0"
+    ]
+   ],
+   [
+    "2",
+    [
+     "1",
+     "1"
+    ]
+   ]
+  ]
+ },
+ "termination": {
+  "terminated": true,
+  "finite_vertices": 6,
+  "ideal_vertices": 0,
+  "edges": 6,
+  "open_edges": 0
+ },
+ "batches": 20,
+ "max_delta_processed": 42.21320343559643,
+ "seconds": 2.546984910964966,
+ "caps": {
+  "delta_max": 100000000.0,
+  "max_roots": 400,
+  "max_batches": 100000,
+  "time_limit": 1800,
+  "stopped_by": null
+ },
+ "coxeter_edges": [
+  [
+   0,
+   1,
+   4
+  ],
+  [
+   0,
+   2,
+   "dotted"
+  ],
+  [
+   0,
+   4,
+   "dotted"
+  ],
+  [
+   0,
+   5,
+   "dotted"
+  ],
+  [
+   1,
+   3,
+   "dotted"
+  ],
+  [
+   1,
+   4,
+   "dotted"
+  ],
+  [
+   1,
+   5,
+   "dotted"
+  ],
+  [
+   2,
+   3,
+   "dotted"
+  ],
+  [
+   2,
+   5,
+   "dotted"
+  ],
+  [
+   3,
+   4,
+   "dotted"
+  ]
+ ],
+ "coxiter_graph": "6 2\n1 2 4\n1 3 1\n1 5 1\n1 6 1\n2 4 1\n2 5 1\n2 6 1\n3 4 1\n3 6 1\n4 5 1\n",
+ "label": "d0_3",
+ "coxiter_check": {
+  "cocompact": "yes",
+  "finite_covolume": "yes",
+  "f_vector": [
+   6,
+   6,
+   1
+  ],
+  "vertices_at_infinity": "0",
+  "euler": "-5/8",
+  "dimension": "2"
+ }
+}
