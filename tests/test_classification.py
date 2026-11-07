@@ -89,3 +89,18 @@ def test_bogachev_nondiagonal_rows_do_not_cover_new_n3_cells():
         assert str(canonical(QI.parse(d))) not in dets
     # L(8) = <-(7+6r2),1,1,1> is p23a
     assert canonical(QI.parse("7+6*r2")) == canonical(QI.parse("-3+4*r2"))
+
+
+def test_oq7_recomputed_chambers_of_p17a_class_are_not_842_hexagons():
+    """Full chambers of the 8 entries with determinant ideal (-1+3r2), recomputed by
+    reflect.vinberg3 (data/mark_full.json): octagons, or hexagons without a pi/8 angle."""
+    from reflect.mark import angle_label, load
+    E = load()
+    F = json.loads((ROOT / "data/mark_full.json").read_text())
+    for i in (174, 177, 276, 278, 279, 281, 282, 284):
+        f = F[str(i)]
+        assert f["ok"] and f["status"] == "reflective"
+        R = [[QI.parse(x) for x in r] for r in f["roots"]]
+        labels = {angle_label(E[i]["G"], R[a], R[b])
+                  for a in range(len(R)) for b in range(a + 1, len(R))}
+        assert len(R) == 8 or (len(R) == 6 and "8" not in labels), (i, len(R), labels)

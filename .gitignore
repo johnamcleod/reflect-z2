@@ -4,3 +4,8 @@ __pycache__/
 tools/build/
 papers/
 tools/src/
+tech_report/arxiv/
+tech_report/*.aux
+tech_report/*.log
+tech_report/*.out
+tech_report/arxiv_submission.tar.gz

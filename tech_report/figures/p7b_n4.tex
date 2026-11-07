@@ -1,0 +1,20 @@
+\begin{tikzpicture}[scale=2.2,v/.style={circle,draw,fill=white,inner sep=1.2pt,font=\tiny}]
+  \node[v] (0) at (1.000,0.000) {1};
+  \node[v] (1) at (0.766,0.643) {2};
+  \node[v] (2) at (0.174,0.985) {3};
+  \node[v] (3) at (-0.500,0.866) {4};
+  \node[v] (4) at (-0.940,0.342) {5};
+  \node[v] (5) at (-0.940,-0.342) {6};
+  \node[v] (6) at (-0.500,-0.866) {7};
+  \node[v] (7) at (0.174,-0.985) {8};
+  \node[v] (8) at (0.766,-0.643) {9};
+  \draw (0) -- (1);
+  \draw (0) -- (6);
+  \draw (1) -- (2);
+  \draw (2) -- node[fill=white,inner sep=0.5pt,font=\tiny] {4} (3);
+  \draw (2) -- (5);
+  \draw (2) -- node[fill=white,inner sep=0.5pt,font=\tiny] {4} (6);
+  \draw (3) -- node[fill=white,inner sep=0.5pt,font=\tiny] {4} (6);
+  \draw (4) -- (5);
+  \draw (4) -- (6);
+\end{tikzpicture}
