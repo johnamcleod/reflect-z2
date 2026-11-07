@@ -58,3 +58,34 @@ def test_oq7_only_842_hexagon_in_table_is_p17b():
     assert [m["entry"] for m in j["matches"]] == [173]
     j = json.loads((ROOT / "data/isometries/p17a.json").read_text())
     assert j["matches"] == [] and 173 not in j["entries_checked"]
+
+
+def test_literature_annotations_cover_every_reflective_cell():
+    from reflect.literature import CELLS, NEW, source
+    unsourced = set()
+    for r in RECS:
+        iso = r["mark_match"]["isometric"] if r["mark_match"] else 0
+        for n in r["faces"]:
+            if not source(r["label"], n, iso):
+                unsourced.add((r["label"], n))
+    assert unsourced == set(NEW)
+    reflective = {(r["label"], n) for r in RECS for n in r["faces"]}
+    assert set(CELLS) <= reflective          # no attribution to a non-reflective cell
+
+
+def test_bogachev_nondiagonal_rows_do_not_cover_new_n3_cells():
+    from reflect.coxeter import determinant
+    from reflect.params import canonical
+    s = QI(0, 1)
+    M = lambda rows: [[QI(x) if isinstance(x, int) else x for x in r] for r in rows]
+    rows = [M([[2, -1, 0, 0], [-1, 2, -1, 0], [0, -1, -s, 0], [0, 0, 0, 1]]),           # L(6)
+            M([[2, 0, 0, -1], [0, 2, -1, -1], [0, -1, 2, -s], [-1, -1, -s, 2]]),        # L(10)
+            M([[2, 0, 0, -1], [0, 2, -1, -1], [0, -1, 2, -s - 1], [-1, -1, -s - 1, 2]])]  # L(11)
+    one = QI(1)
+    rows.append([[QI(2), -one - s, QI(0), QI(0)], [-one - s, QI(2), QI(0), QI(0)],      # L(7)
+                 [QI(0), QI(0), QI(2) + s, QI(0)], [QI(0), QI(0), QI(0), one]])
+    dets = {str(canonical(-determinant(G))) for G in rows}
+    for d in ("3+3*r2", "-2+3*r2"):
+        assert str(canonical(QI.parse(d))) not in dets
+    # L(8) = <-(7+6r2),1,1,1> is p23a
+    assert canonical(QI.parse("7+6*r2")) == canonical(QI.parse("-3+4*r2"))

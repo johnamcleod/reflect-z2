@@ -107,35 +107,57 @@ Over ℚ the analogous pattern is d = 1, 2, 3, 5, 7, 11, 17 → n = 19, 14, 13, 
 
 **Result.** 27 values of d are reflective, and 44 are non-reflective in every n ≥ 2. The non-reflective ones are the remaining candidates plus the extra conjugate partner dm1_12; each is certified at n = 2.
 
-| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric |
-|---|---|---|---|---|---|---|
-| unit | 1+r2 | -1 | 2–6 | 3, 5, 7, 10, 34 | 7 (unit_n7) | 1 of 1 |
-| ram2 | r2 | -2 | 2–5 | 4, 6, 8, 27 | 6 (ram2_n6) | 1 of 2 |
-| p7a | -1+2*r2 | -7 | 2–5 | 4, 5, 8, 20 | 6 (p7a_n6) | 6 of 10 |
-| p7b | 1+2*r2 | -7 | 2–4 | 4, 6, 9 | 5 (p7b_n5) | 1 of 13 |
-| inert3 | 3+3*r2 | -9 | 2–3 | 4, 12 | 4 (inert3_n4) | 2 of 5 |
-| dm2_3 | -2+3*r2 | -14 | 2–3 | 5, 18 | 4 (dm2_3_n4) | 3 of 15 |
-| p23a | -3+4*r2 | -23 | 2–3 | 5, 10 | 4 (p23a_n4) | 3 of 6 |
-| d2_3 | 2+3*r2 | -14 | 2–2 | 5 | 3 (d2_3_n3) | 2 of 13 |
-| p17a | -1+3*r2 | -17 | 2–2 | 6 | 3 (p17a_n3) | 0 of 8 **(missing, OQ7)** |
-| p17b | 1+3*r2 | -17 | 2–2 | 6 | 3 (p17b_n3) | 1 of 8 |
-| d0_3 | 3*r2 | -18 | 2–2 | 6 | 3 (d0_3_n3) | 3 of 6 |
-| p23b | 3+4*r2 | -23 | 2–2 | 6 | 3 (p23b_n3) | 1 of 8 |
-| inert5 | 5+5*r2 | -25 | 2–2 | 6 | 3 (inert5_n3) | 5 of 5 |
-| p31b | 1+4*r2 | -31 | 2–2 | 8 | 3 (p31b_n3) | 2 of 5 |
-| p41a | -3+5*r2 | -41 | 2–2 | 12 | 3 (p41a_n3) | 2 of 2 |
-| p41b | 3+5*r2 | -41 | 2–2 | 12 | 3 (p41b_n3) | 2 of 2 |
-| p47a | -5+6*r2 | -47 | 2–2 | 10 | 3 (p47a_n3) | 4 of 6 |
-| d7_7 | 7+7*r2 | -49 | 2–2 | 5 | 3 (d7_7_n3) | 2 of 23 |
-| dm6_7 | -6+7*r2 | -62 | 2–2 | 11 | 3 (dm6_7_n3) | 3 of 4 |
-| d3_6 | 3+6*r2 | -63 | 2–2 | 8 | 3 (d3_6_n3) | 2 of 24 |
-| d0_7 | 7*r2 | -98 | 2–2 | 8 | 3 (d0_7_n3) | 2 of 23 |
-| d9_10 | 9+10*r2 | -119 | 2–2 | 8 | 3 (d9_10_n3) | 3 of 10 |
-| dm9_10 | -9+10*r2 | -119 | 2–2 | 12 | 3 (dm9_10_n3) | 3 of 6 |
-| dm6_9 | -6+9*r2 | -126 | 2–2 | 11 | 3 (dm6_9_n3) | 5 of 27 |
-| d1_9 | 1+9*r2 | -161 | 2–2 | 18 | 3 (d1_9_n3) | 4 of 4 |
-| dm1_9 | -1+9*r2 | -161 | 2–2 | 18 | 3 (dm1_9_n3) | 3 of 6 |
-| d1_12 | 1+12*r2 | -287 | 2–2 | 24 | 3 (d1_12_n3) | 5 of 5 |
+**Sources.** Each reflective cell (d, n) is annotated with the earliest paper we found that contains it ([Mark18], [Bug90], [Bog], [Gug17]; list below). **🆕 new** marks a cell that appears in none of them; the attributions are checked as described in `reflect/literature.py`.
+
+| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric | sources per reflective n |
+|---|---|---|---|---|---|---|---|
+| unit | 1+r2 | -1 | 2–6 | 3, 5, 7, 10, 34 | 7 (unit_n7) [Bug90] | 1 of 1 | n=2: [Bug90]; n=3: [Bug90]; n=4: [Bug90]; n=5: [Bug90]; n=6: [Bug90] |
+| ram2 | r2 | -2 | 2–5 | 4, 6, 8, 27 | 6 (ram2_n6) | 1 of 2 | n=2: [Mark18]; n=3: [Bog]; **n=4: 🆕 new**; **n=5: 🆕 new** |
+| p7a | -1+2*r2 | -7 | 2–5 | 4, 5, 8, 20 | 6 (p7a_n6) [Gug17] | 6 of 10 | n=2: [Mark18]; n=3: [Bog]; n=4: [Gug17]; n=5: [Gug17] |
+| p7b | 1+2*r2 | -7 | 2–4 | 4, 6, 9 | 5 (p7b_n5) | 1 of 13 | n=2: [Mark18]; n=3: [Bog]; **n=4: 🆕 new** |
+| inert3 | 3+3*r2 | -9 | 2–3 | 4, 12 | 4 (inert3_n4) | 2 of 5 | n=2: [Mark18]; **n=3: 🆕 new** |
+| dm2_3 | -2+3*r2 | -14 | 2–3 | 5, 18 | 4 (dm2_3_n4) | 3 of 15 | n=2: [Mark18]; **n=3: 🆕 new** |
+| p23a | -3+4*r2 | -23 | 2–3 | 5, 10 | 4 (p23a_n4) | 3 of 6 | n=2: [Mark18]; n=3: [Bog] |
+| d2_3 | 2+3*r2 | -14 | 2–2 | 5 | 3 (d2_3_n3) | 2 of 13 | n=2: [Mark18] |
+| p17a | -1+3*r2 | -17 | 2–2 | 6 | 3 (p17a_n3) | 0 of 8 **(missing, OQ7)** | **n=2: 🆕 new** |
+| p17b | 1+3*r2 | -17 | 2–2 | 6 | 3 (p17b_n3) | 1 of 8 | n=2: [Mark18] |
+| d0_3 | 3*r2 | -18 | 2–2 | 6 | 3 (d0_3_n3) | 3 of 6 | n=2: [Mark18] |
+| p23b | 3+4*r2 | -23 | 2–2 | 6 | 3 (p23b_n3) | 1 of 8 | n=2: [Mark18] |
+| inert5 | 5+5*r2 | -25 | 2–2 | 6 | 3 (inert5_n3) | 5 of 5 | n=2: [Mark18] |
+| p31b | 1+4*r2 | -31 | 2–2 | 8 | 3 (p31b_n3) | 2 of 5 | n=2: [Mark18] |
+| p41a | -3+5*r2 | -41 | 2–2 | 12 | 3 (p41a_n3) | 2 of 2 | n=2: [Mark18] |
+| p41b | 3+5*r2 | -41 | 2–2 | 12 | 3 (p41b_n3) | 2 of 2 | n=2: [Mark18] |
+| p47a | -5+6*r2 | -47 | 2–2 | 10 | 3 (p47a_n3) | 4 of 6 | n=2: [Mark18] |
+| d7_7 | 7+7*r2 | -49 | 2–2 | 5 | 3 (d7_7_n3) | 2 of 23 | n=2: [Mark18] |
+| dm6_7 | -6+7*r2 | -62 | 2–2 | 11 | 3 (dm6_7_n3) | 3 of 4 | n=2: [Mark18] |
+| d3_6 | 3+6*r2 | -63 | 2–2 | 8 | 3 (d3_6_n3) | 2 of 24 | n=2: [Mark18] |
+| d0_7 | 7*r2 | -98 | 2–2 | 8 | 3 (d0_7_n3) | 2 of 23 | n=2: [Mark18] |
+| d9_10 | 9+10*r2 | -119 | 2–2 | 8 | 3 (d9_10_n3) | 3 of 10 | n=2: [Mark18] |
+| dm9_10 | -9+10*r2 | -119 | 2–2 | 12 | 3 (dm9_10_n3) | 3 of 6 | n=2: [Mark18] |
+| dm6_9 | -6+9*r2 | -126 | 2–2 | 11 | 3 (dm6_9_n3) | 5 of 27 | n=2: [Mark18] |
+| d1_9 | 1+9*r2 | -161 | 2–2 | 18 | 3 (d1_9_n3) | 4 of 4 | n=2: [Mark18] |
+| dm1_9 | -1+9*r2 | -161 | 2–2 | 18 | 3 (dm1_9_n3) | 3 of 6 | n=2: [Mark18] |
+| d1_12 | 1+12*r2 | -287 | 2–2 | 24 | 3 (d1_12_n3) | 5 of 5 | n=2: [Mark18] |
+
+### New reflective cases
+
+These cells are reflective by our runs, with the Coxeter diagram in `diagrams/` and a CoxIter check, and appear in none of the sources below:
+
+- **ram2, d = r2, n = 4**: 8 faces; Bogachev covers n = 3 only; no source for ⟨−√2,1,…,1⟩ in higher n.
+- **ram2, d = r2, n = 5**: 27 faces; as n = 4.
+- **p7b, d = 1+2*r2, n = 4**: 9 faces; Bogachev covers n = 3 only (L(2)); not in Guglielmetti's list.
+- **inert3, d = 3+3*r2, n = 3**: 12 faces; no row of Bogachev's L(1)–L(11) has determinant class −(3+3√2).
+- **dm2_3, d = -2+3*r2, n = 3**: 18 faces; no row of Bogachev's L(1)–L(11) has determinant class −(−2+3√2).
+- **p17a, d = -1+3*r2, n = 2**: 6 faces; no isometric entry in Mark's table; its only (842)² hexagon is p17b (OQ7).
+
+**Non-reflectivity above the reflective range.** The first non-reflective n₀ was already known only for unit (n₀ = 7, [Bug90]) and p7a (n₀ = 6, consistent with the range n ≤ 5 in [Gug17]). For the 43 candidates non-reflective at n = 2, non-reflectivity also follows from [Mark18] (no isometric entry). For all other d the certificate at n₀ is new.
+
+**References.**
+
+- [Mark18] A. Mark, The classification of rank 3 reflective hyperbolic lattices over ℤ[√2], Math. Proc. Camb. Phil. Soc. 164 (2018) 221–257, arXiv:1512.01133
+- [Bug90] V. O. Bugaenko, Selecta Math. Sov. 9 (1990) (not read: cited as [Bug90] in Guglielmetti's thesis and in Belolipetsky's survey arXiv:1506.03111)
+- [Bog] N. Bogachev, From geometry to arithmetic of compact hyperbolic Coxeter polytopes, arXiv:2003.11944 (candidate list L(1)–L(11))
+- [Gug17] R. Guglielmetti, PhD thesis, Université de Fribourg, 2017, table of forms ⟨−α,1,…,1⟩ for quadratic Pisot α and the list of reflective forms over ℚ[√2]
 
 **Non-reflective for all n** (certificate at n = 2): p31a (-1+4*r2), dm4_5 (-4+5*r2), d4_5 (4+5*r2), dm2_5 (-2+5*r2), d2_5 (2+5*r2), d0_5 (5*r2), d6_7 (6+7*r2), dm3_6 (-3+6*r2), dm4_7 (-4+7*r2), d4_7 (4+7*r2), dm2_7 (-2+7*r2), d2_7 (2+7*r2), dm3_8 (-3+8*r2), d3_8 (3+8*r2), d6_9 (6+9*r2), dm4_9 (-4+9*r2), d4_9 (4+9*r2), dm2_9 (-2+9*r2), dm9_11 (-9+11*r2), d9_11 (9+11*r2), dm4_11 (-4+11*r2), d4_11 (4+11*r2), dm10_13 (-10+13*r2), dm2_11 (-2+11*r2), d2_11 (2+11*r2), d10_13 (10+13*r2), dm12_15 (-12+15*r2), d12_15 (12+15*r2), dm16_17 (-16+17*r2), dm4_13 (-4+13*r2), d4_13 (4+13*r2), d16_17 (16+17*r2), dm10_15 (-10+15*r2), d6_15 (6+15*r2), dm12_17 (-12+17*r2), dm4_15 (-4+15*r2), d4_15 (4+15*r2), d12_17 (12+17*r2), d21_21 (21+21*r2), d6_21 (6+21*r2), d0_21 (21*r2), dm28_35 (-28+35*r2), d28_35 (28+35*r2), dm1_12 (-1+12*r2).
 

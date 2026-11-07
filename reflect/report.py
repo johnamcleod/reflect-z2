@@ -242,6 +242,7 @@ def write_report(summary):
 def classification_section():
     """Brief 2 (additional_notes.md §7): all squarefree admissible d."""
     from .classification import build
+    from .literature import N0, NEW, REFS, source
     recs = build()
     for r in recs:                      # diagrams for every reflective cell
         for n in r["faces"]:
@@ -272,16 +273,50 @@ def classification_section():
          f"**Result.** {len(refl)} values of d are reflective, and {len(non)} are non-reflective "
          "in every n ≥ 2. The non-reflective ones are the remaining candidates plus the extra "
          "conjugate partner dm1_12; each is certified at n = 2.\n",
-         "| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric |",
-         "|---|---|---|---|---|---|---|"]
+         "**Sources.** Each reflective cell (d, n) is annotated with the earliest paper we "
+         "found that contains it ([Mark18], [Bug90], [Bog], [Gug17]; list below). "
+         "**🆕 new** marks a cell that appears in none of them; "
+         "the attributions are checked as described in `reflect/literature.py`.\n",
+         "| param | d | norm of d | reflective n | faces | n₀ (cert) | Mark entries isometric "
+         "| sources per reflective n |",
+         "|---|---|---|---|---|---|---|---|"]
+    new_cells = []
     for r in refl:
         m = r["mark_match"]
-        mm = f"{m['isometric']} of {m['entries_checked']}" if m else "–"
-        if m and m["isometric"] == 0:
+        iso = m["isometric"] if m else 0
+        mm = f"{iso} of {m['entries_checked']}" if m else "–"
+        if m and iso == 0:
             mm += " **(missing, OQ7)**"
+        srcs = []
+        for n in sorted(r["faces"]):
+            s = source(r["label"], n, iso)
+            if s:
+                srcs.append(f"n={n}: [{s[0]}]")
+            else:
+                srcs.append(f"**n={n}: 🆕 new**")
+                new_cells.append((r, n))
+        n0 = f"{r['n0']} ({r['cert_n0']})"
+        if r["label"] in N0:
+            n0 += f" [{N0[r['label']][0]}]"
         L.append(f"| {r['label']} | {r['d']} | {r['N_d']} | 2–{r['max_reflective_n']} | "
                  + ", ".join(f"{k}" for _, k in sorted(r["faces"].items()))
-                 + f" | {r['n0']} ({r['cert_n0']}) | {mm} |")
+                 + f" | {n0} | {mm} | " + "; ".join(srcs) + " |")
+    L.append("")
+    L.append("### New reflective cases\n")
+    L.append("These cells are reflective by our runs, with the Coxeter diagram in `diagrams/` "
+             "and a CoxIter check, and appear in none of the sources below:\n")
+    for r, n in new_cells:
+        L.append(f"- **{r['label']}, d = {r['d']}, n = {n}**: {r['faces'][n]} faces; "
+                 f"{NEW.get((r['label'], n), 'UNEXPLAINED')}.")
+    L.append("")
+    L.append("**Non-reflectivity above the reflective range.** The first non-reflective n₀ was "
+             "already known only for unit (n₀ = 7, [Bug90]) and p7a (n₀ = 6, consistent with "
+             "the range n ≤ 5 in [Gug17]). For the 43 candidates non-reflective at n = 2, "
+             "non-reflectivity also follows from [Mark18] (no isometric entry). For all other "
+             "d the certificate at n₀ is new.\n")
+    L.append("**References.**\n")
+    for k, v in REFS.items():
+        L.append(f"- [{k}] {v}")
     L.append("")
     L.append("**Non-reflective for all n** (certificate at n = 2): "
              + ", ".join(f"{r['label']} ({r['d']})" for r in non) + ".\n")
