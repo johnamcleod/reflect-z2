@@ -137,6 +137,8 @@ Following thesis Fig. 3.2, where an infinite-order isometry is a product of two 
 
 `results.csv`, `diagrams/` (TikZ, PNG, JSON roots and Gram matrices), `data/certs/*.json`, `verify_certificate.py`, `report.md`, and `tests/`.
 
+The LaTeX technical report and its arXiv packaging live in a separate repository, `reflect-z2-report` (a sibling directory). It reads this repository's `reflect` package, `data/` and `diagrams/`, and records the commit it was built from.
+
 ## Brief 2: complete classification over ℤ[√2] (additional_notes.md §7)
 
 - **Inputs.**
